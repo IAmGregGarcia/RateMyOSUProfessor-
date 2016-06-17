@@ -1,0 +1,38 @@
+{
+	// Required
+	"manifest_version": 2,
+	"name": "Ohio State Rate My Professor Extension",
+	"version": "1.0.0.0",
+
+	// Recommended
+	"default_locale": "en",
+	"description": "An extensin that populates Rate My Professor information for CSE faculty at Ohio State University",
+	"icons": {},
+
+	"author": "Greg Garcia",
+	"background": {
+		"scripts": ["background.js"],
+		//Recommended
+		"persistant": false
+	},
+
+	"content_scripts": [
+	{
+		// fix this
+		"matches": ["https://cse.osu.edu/about-us/faculty"],
+		"js": ["jquery-3.0.0.min.js", "osurmp.js"]
+
+		}
+	],
+
+	"permissions": [
+		"activeTab",
+		"https://cse.osu.edu/about-us/faculty",
+		"http://www.ratemyprofessors.com/*"
+	],
+
+	"web_accessible_resources": [
+		"http://www.ratemyprofessors.com/*"
+	],
+
+}
