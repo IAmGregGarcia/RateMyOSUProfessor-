@@ -5,7 +5,7 @@
 	"version": "1.0.0.0",
 
 	// Recommended
-	"default_locale": "en",
+	//"default_locale": "en",
 	"description": "An extensin that populates Rate My Professor information for CSE faculty at Ohio State University",
 	"icons": {},
 
@@ -27,12 +27,12 @@
 
 	"permissions": [
 		"activeTab",
-		"https://cse.osu.edu/about-us/faculty",
+		"https://cse.osu.edu/about-us/faculty/*",
 		"http://www.ratemyprofessors.com/*"
 	],
 
 	"web_accessible_resources": [
 		"http://www.ratemyprofessors.com/*"
-	],
+	]
 
 }
