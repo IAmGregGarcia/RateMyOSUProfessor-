@@ -6,8 +6,10 @@
  * 
  */
 
+// Professor Name conflicts TODO: manually enter Anastasios (Tasos) Sidiropolous via exceptions
 var exceptions = {};
 
+appendOSUprof(exceptions);
 
 //Insert a column with the ratings and corresponding professor pages for each professor from Ratemyprofessor.com
 
@@ -20,13 +22,13 @@ function appendOSUprof(exceptions) {
     
     // Insert RMP heading
     $('ul.osu-people-directory').find('li').each(function() {
-        $(this).find('.km-email').after('<div class="osu-rmp"><h3>Rate My Professory Score(s)</h3></div>');
+        $(this).find('.km-email').after('<div class="osu-rmp"><br><h4 style="font-size: 14px !important;">Rate My Professory Score(s):</h4></div>');
     });
 
     //Insert "space" for RMP info for each listed faculty member
-    $('ul.osu-people-directory').find('li').each(function() {
+    $('.osu-people-directory').find('li').each(function() {
 
-        var professorName = $(this).find('h2').find('a').text();
+        var professorName = $(this).find('h2').find('a').html();
         var URLprofessorName = professorName.replace(/ /g, '+');
 
         if(exceptions[professorName]) {
@@ -34,7 +36,7 @@ function appendOSUprof(exceptions) {
             findRatings(exceptions[professorName], professorName);
         } else {
 
-            rmpsearch = 'http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=The+Ohio+State+University&queryoption=HEADER&query=PROFESSORNAME&facetSearch=true'
+            rmpsearch = 'http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=&schoolID=724&query=PROFESSORNAME';
             rmpsearch = rmpsearch.replace('PROFESSORNAME', URLprofessorName);
         }
 
@@ -125,7 +127,7 @@ function findRatings(professorPageURL, professorName){
         }
 
         //Update the new RMP column cells with the new information.
-        changeRMPCells(professorPageURL, rating, professorName);
+        updateRMPinfo(professorPageURL, rating, professorName);
     });
 }
 
@@ -155,12 +157,12 @@ function updateRMPinfo(professorPageURL, rating, professorName){
                         '\nEasiness: '+ rating.easiness +
                         ' \n<a href="' + professorPageURL + '" target="_blank">More info</a>');
                 } else {
-                    $(this).find('h3').after(
+                    $(this).find('h6').after(
                         '<p><a href="' + professorPageURL + '" target="_blank">Be the\nfirst to rate!</a></p>'
                     );
                 }
             } else {
-                $(this).find('h3').after('<p>>No page\nwas found.</p>');
+                $(this).find('h4').after('<p>No page was found.</p>');
             }
         }
     });

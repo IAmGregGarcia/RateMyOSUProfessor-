@@ -7,13 +7,18 @@
 	// Recommended
 	//"default_locale": "en",
 	"description": "An extensin that populates Rate My Professor information for CSE faculty at Ohio State University",
-	"icons": {},
+	"browser_action": {
+		"default_icon": "icon.png"
+	},
+	"icons": {
+		"16": "icon.png"
+		},
 
 	"author": "Greg Garcia",
 	"background": {
 		"scripts": ["background.js"],
 		//Recommended
-		"persistant": false
+		"persistent": false
 	},
 
 	"content_scripts": [
