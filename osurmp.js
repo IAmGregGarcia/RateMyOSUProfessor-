@@ -29,7 +29,17 @@ function appendOSUprof(exceptions) {
     $('.osu-people-directory').find('li').each(function() {
 
         var professorName = $(this).find('h2').find('a').html();
-        var URLprofessorName = professorName.replace(/ /g, '+');
+        if(professorName == null) {
+            professorName = "Could not locate professor on webpage";
+        } else {
+
+            // Swap first and last name
+            var profSplit = professorName.split(" ");
+            var profArray = swapArrayElements(profSplit, 0, 1);
+            var profString = profArray.toString();
+
+            var URLprofessorName = profString.replace(/,/g,'+');
+        }
 
         if(exceptions[professorName]) {
 
@@ -43,7 +53,21 @@ function appendOSUprof(exceptions) {
         getProfessorExtension(rmpsearch, professorName);
     });
 }
-    
+
+/**
+* Swap the elements in an array at indexes x and y.
+*
+* @param (a) The array.
+* @param (x) The index of the first element to swap.
+* @param (y) The index of the second element to swap.
+* @return {Array} A new array with the elements swapped.
+*/
+
+function swapArrayElements(a, x, y) {
+  if (a.length === 1) return a;
+  a.splice(y, 1, a.splice(x, 1, a[y])[0]);
+  return a;
+};
 /*
 Given an RMP search page, find the numerical extension that corresponds with the the professor's personal RMP page.
 */
@@ -97,8 +121,8 @@ function findRatings(professorPageURL, professorName){
 
         var rating = {
             overall: -1,
-            helpfulness: -1,
-            clarity: -1,
+            // helpfulness: -1,
+            // clarity: -1,
             easiness: -1
         };
         var professorName, professorPageURL, responseXML;
@@ -110,9 +134,9 @@ function findRatings(professorPageURL, professorName){
 
             //Find the numerical extension that leads to the specific professor's RMP page.
             rating.overall = $(responseXML).find('.grade').html();
-            rating.helpfulness = $(responseXML).find('.rating:eq(0)').html();
-            rating.clarity = $(responseXML).find('.rating:eq(1)').html();
-            rating.easiness = $(responseXML).find('.rating:eq(2)').html();
+            //rating.helpfulness = $(responseXML).find('.rating:eq(0)').html();
+            // rating.clarity = $(responseXML).find('.rating:eq(1)').html();
+            // rating.easiness = $(responseXML).find('.rating:eq(0)').html();
 
             //document.write(responseXML);
 
@@ -140,9 +164,15 @@ function updateRMPinfo(professorPageURL, rating, professorName){
 
     $('ul.osu-people-directory').find('li').each(function() {
 
-        var professorCell = $(this).find('h2').find('a').text();
+        // fix this guy right here
+
+        var professorCell = $(this).find('h2').find('a').html();
         // console.log(professorCell);
         // console.log(professorName);
+
+        // TODO: something strange is happening here: professorCell is capturing the pervious professor on the page, and checking
+        // against professorName, which has the *correct* prof for whom we are searching. 
+        // check professorname var above
 
         if (professorCell == professorName){
 
@@ -150,14 +180,14 @@ function updateRMPinfo(professorPageURL, rating, professorName){
 
                 if (rating != '?' && typeof rating != 'undefined') {
 
-                    $(this).find('h3').after(
+                    $(this).find('h4').after(
                         'Overall: '+ rating.overall +
-                        '\nHelpfulness: '+ rating.helpfulness +
-                        '\nClarity: '+ rating.clarity +
-                        '\nEasiness: '+ rating.easiness +
-                        ' \n<a href="' + professorPageURL + '" target="_blank">More info</a>');
+                        // '\nHelpfulness: '+ rating.helpfulness +
+                        // '\nClarity: '+ rating.clarity +
+                       // '\nEasiness: '+ rating.easiness +
+                        ' \n<a href="' + professorPageURL + "\n" + '" target="_blank">More info</a>');
                 } else {
-                    $(this).find('h6').after(
+                    $(this).find('h4').after(
                         '<p><a href="' + professorPageURL + '" target="_blank">Be the\nfirst to rate!</a></p>'
                     );
                 }

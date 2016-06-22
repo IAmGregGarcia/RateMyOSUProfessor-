@@ -24,7 +24,7 @@
 	"content_scripts": [
 	{
 		// fix this
-		"matches": ["https://cse.osu.edu/about-us/faculty"],
+		"matches": ["https://cse.osu.edu/about-us/faculty", "https://cse.osu.edu/directory"],
 		"js": ["jquery-3.0.0.min.js", "osurmp.js"]
 
 		}
