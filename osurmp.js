@@ -123,7 +123,7 @@ function findRatings(professorPageURL, professorName){
             overall: -1,
             // helpfulness: -1,
             // clarity: -1,
-            easiness: -1
+            mostRecent: -1
         };
         var professorName, professorPageURL, responseXML;
         try {
@@ -136,7 +136,10 @@ function findRatings(professorPageURL, professorName){
             rating.overall = $(responseXML).find('.grade').html();
             //rating.helpfulness = $(responseXML).find('.rating:eq(0)').html();
             // rating.clarity = $(responseXML).find('.rating:eq(1)').html();
-            // rating.easiness = $(responseXML).find('.rating:eq(0)').html();
+
+            //rating.difficulty = $(responseXML).find(":contains('Level of Difficulty'").find('.grade').html();              
+
+            rating.mostRecent = $(responseXML).find('.rating:eq(1)').html();
 
             //document.write(responseXML);
 
@@ -181,10 +184,12 @@ function updateRMPinfo(professorPageURL, rating, professorName){
                 if (rating != '?' && typeof rating != 'undefined') {
 
                     $(this).find('h4').after(
-                        'Overall: '+ rating.overall +
+                        '<div class="rmp-ratings"><b>Overall:</b> '+ rating.overall + '</div>'
                         // '\nHelpfulness: '+ rating.helpfulness +
                         // '\nClarity: '+ rating.clarity +
-                       // '\nEasiness: '+ rating.easiness +
+                        );
+                    $(this).find('.rmp-ratings').after(
+                        '\n<b>Most Recent Rating:</b> ' + '\n' + rating.mostRecent +
                         ' \n<a href="' + professorPageURL + "\n" + '" target="_blank">More info</a>');
                 } else {
                     $(this).find('h4').after(
@@ -194,6 +199,22 @@ function updateRMPinfo(professorPageURL, rating, professorName){
             } else {
                 $(this).find('h4').after('<p>No page was found.</p>');
             }
+
+            $(this).find('.profile-details').find('br').eq(1).remove();
+            var ratingType = $(this).find('.rating-type').html();
+            if(ratingType == 'good') {
+                $(this).find('.rating-type').css('background-color','#b2cf35').css('color', 'white');
+                                                  
+            } else if (ratingType == 'average') {
+                $(this).find('.rating-type').css('background-color','#f7cc1e').css('color', 'black');
+                                                   
+            } else if (ratingType == 'poor') {
+                $(this).find('.rating-type').css('background-color','#b21f35').css('color', 'white');
+                                                  
+            } else {
+                return null;
+            }
+            //$(this).find('.rating-type').css('color', 'red');
         }
     });
 }
