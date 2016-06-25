@@ -1,7 +1,7 @@
 {
 	// Required
 	"manifest_version": 2,
-	"name": "Ohio State Rate My Professor Extension",
+	"name": "Ohio State Rate My Professor Extension - Course Search Page",
 	"version": "1.0.0.0",
 
 	// Recommended
@@ -16,7 +16,7 @@
 
 	"author": "Greg Garcia",
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["eventPage.js"],
 		//Recommended
 		"persistent": false
 	},
@@ -24,16 +24,15 @@
 	"content_scripts": [
 	{
 		// fix this
-		"matches": ["https://cse.osu.edu/about-us/faculty", "https://cse.osu.edu/directory"],
+		"matches": ["https://classes.osu.edu/class-search/*"],
 		"js": ["jquery-3.0.0.min.js", "osurmp.js"]
-
-		}
+	}
 	],
 
 	"permissions": [
-		"activeTab",
-		"https://cse.osu.edu/about-us/faculty/*",
-		"http://www.ratemyprofessors.com/*"
+		"http://www.ratemyprofessors.com/*",
+		"tabs",
+		"webNavigation"
 	],
 
 	"web_accessible_resources": [

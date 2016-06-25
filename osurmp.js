@@ -1,220 +1,52 @@
-/*global $:false */
-/*global chrome:false*/
 
 /**
  *
  * 
  */
-
-// Professor Name conflicts TODO: manually enter Anastasios (Tasos) Sidiropolous via exceptions
-var exceptions = {};
-
-appendOSUprof(exceptions);
-
-//Insert a column with the ratings and corresponding professor pages for each professor from Ratemyprofessor.com
-
-function appendOSUprof(exceptions) {
-
-    // //Insert a column header
-    // $('thead').find('tr').each(function() {
-    //     $(this).find('th').eq(4).after('<th>Rate My Professor Score(s)</th>');
-    // });
-    
-    // Insert RMP heading
-    $('ul.osu-people-directory').find('li').each(function() {
-        $(this).find('.km-email').after('<div class="osu-rmp"><br><h4 style="font-size: 14px !important;">Rate My Professory Score(s):</h4></div>');
-    });
-
-    //Insert "space" for RMP info for each listed faculty member
-    $('.osu-people-directory').find('li').each(function() {
-
-        var professorName = $(this).find('h2').find('a').html();
-        if(professorName == null) {
-            professorName = "Could not locate professor on webpage";
-        } else {
-
-            // Swap first and last name
-            var profSplit = professorName.split(" ");
-            var profArray = swapArrayElements(profSplit, 0, 1);
-            var profString = profArray.toString();
-
-            var URLprofessorName = profString.replace(/,/g,'+');
-        }
-
-        if(exceptions[professorName]) {
-
-            findRatings(exceptions[professorName], professorName);
-        } else {
-
-            rmpsearch = 'http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=&schoolID=724&query=PROFESSORNAME';
-            rmpsearch = rmpsearch.replace('PROFESSORNAME', URLprofessorName);
-        }
-
-        getProfessorExtension(rmpsearch, professorName);
-    });
-}
-
-/**
-* Swap the elements in an array at indexes x and y.
-*
-* @param (a) The array.
-* @param (x) The index of the first element to swap.
-* @param (y) The index of the second element to swap.
-* @return {Array} A new array with the elements swapped.
-*/
-
-function swapArrayElements(a, x, y) {
-  if (a.length === 1) return a;
-  a.splice(y, 1, a.splice(x, 1, a[y])[0]);
-  return a;
-};
-/*
-Given an RMP search page, find the numerical extension that corresponds with the the professor's personal RMP page.
-*/
-function getProfessorExtension(searchPageURL, professorName){
-
-    var xmlRequestInfo = {
-        method: 'GET',
-        action: 'xhttp',
-        url: searchPageURL,
-        professorName: professorName
-    };
-
-    chrome.runtime.sendMessage(xmlRequestInfo, function(data) {
-        var responseXML, professorName, ratings;
-        try {
-
-            responseXML = data.responseXML;
-            professorName = data.professorName;
-
-            //Find the numerical extension that leads to the specific professor's RMP page.
-            var professorURLExtension = $(responseXML).find('.listing:first').find('a:first').attr('href');
-
-            //Check to make sure a result was found
-            if (typeof professorURLExtension === 'undefined'){
-                updateRMPinfo('?','?', professorName);//update RMP cells with empty information
-            } else {
-                var professorPageURL = 'http://www.ratemyprofessors.com' + professorURLExtension;
-                ratings = findRatings(professorPageURL, professorName);
-            }
-        }
-        catch(err) {
-            updateRMPinfo('?', '?', professorName);//update RMP cells with empty information
-        }       
-    });
-}
-
-/*
-Given the url of a specific professor:
-Makes a JSON object containing an overall rating, helpfulness rating, clarity rating, and easiness rating.
-Then makes a pass to change RMP cells to update each individual cell of the RMP column with this info.
-*/
-function findRatings(professorPageURL, professorName){
-    var xmlRequestInfo = {
-        method: 'GET',
-        action: 'xhttp',
-        url: professorPageURL,
-        professorName: professorName
-    };
-
-    chrome.runtime.sendMessage(xmlRequestInfo, function(data) {
-
-        var rating = {
-            overall: -1,
-            // helpfulness: -1,
-            // clarity: -1,
-            mostRecent: -1
-        };
-        var professorName, professorPageURL, responseXML;
-        try {
-
-            professorName = data.professorName;
-            professorPageURL = data.url;
-            responseXML = data.responseXML;
-
-            //Find the numerical extension that leads to the specific professor's RMP page.
-            rating.overall = $(responseXML).find('.grade').html();
-            //rating.helpfulness = $(responseXML).find('.rating:eq(0)').html();
-            // rating.clarity = $(responseXML).find('.rating:eq(1)').html();
-
-            //rating.difficulty = $(responseXML).find(":contains('Level of Difficulty'").find('.grade').html();              
-
-            rating.mostRecent = $(responseXML).find('.rating:eq(1)').html();
-
-            //document.write(responseXML);
-
-            //Check to make sure a result was found
-            if (parseInt(rating.overall) > 5 || parseInt(rating.overall) <= 0 || isNaN(rating.overall)){
-                rating = '?';
-            }
-
-        }
-        catch(err) {
-            rating = '?';
-        }
-
-        //Update the new RMP column cells with the new information.
-        updateRMPinfo(professorPageURL, rating, professorName);
-    });
+function changeResultColor() {
+    var resultCount = document.getElementsByClassName('result-count');
+    resultCount[0].style.color = "red"; 
+    main();
 }
 
 
-/*
-    Rename function to more appropriately reflect the action
-    Most likely will update to have UL with li for RMP rating criteria 
-*/
-function updateRMPinfo(professorPageURL, rating, professorName){
+var node = document.getElementsByClassName('site-subtitle');
+var enable = document.createElement('button');
+enable.id = 'enable-rmp';
+enable.innerText = "Enable RMP";
+node[0].appendChild(enable);
+enable.addEventListener('click', main);
 
-    $('ul.osu-people-directory').find('li').each(function() {
 
-        // fix this guy right here
+var cells = document.querySelectorAll('[id^=MTG_INSTR]')
 
-        var professorCell = $(this).find('h2').find('a').html();
-        // console.log(professorCell);
-        // console.log(professorName);
+MTG_INSTR
 
-        // TODO: something strange is happening here: professorCell is capturing the pervious professor on the page, and checking
-        // against professorName, which has the *correct* prof for whom we are searching. 
-        // check professorname var above
+function main() {
+    changeResultColor();
+    var cells = document.getElementsByClassName("right ng-binding ng-scope");
+    var length = cells.length;
+    var professors = [];
 
-        if (professorCell == professorName){
-
-            if (professorPageURL != '?') {
-
-                if (rating != '?' && typeof rating != 'undefined') {
-
-                    $(this).find('h4').after(
-                        '<div class="rmp-ratings"><b>Overall:</b> '+ rating.overall + '</div>'
-                        // '\nHelpfulness: '+ rating.helpfulness +
-                        // '\nClarity: '+ rating.clarity +
-                        );
-                    $(this).find('.rmp-ratings').after(
-                        '\n<b>Most Recent Rating:</b> ' + '\n' + rating.mostRecent +
-                        ' \n<a href="' + professorPageURL + "\n" + '" target="_blank">More info</a>');
-                } else {
-                    $(this).find('h4').after(
-                        '<p><a href="' + professorPageURL + '" target="_blank">Be the\nfirst to rate!</a></p>'
-                    );
-                }
-            } else {
-                $(this).find('h4').after('<p>No page was found.</p>');
-            }
-
-            $(this).find('.profile-details').find('br').eq(1).remove();
-            var ratingType = $(this).find('.rating-type').html();
-            if(ratingType == 'good') {
-                $(this).find('.rating-type').css('background-color','#b2cf35').css('color', 'white');
-                                                  
-            } else if (ratingType == 'average') {
-                $(this).find('.rating-type').css('background-color','#f7cc1e').css('color', 'black');
-                                                   
-            } else if (ratingType == 'poor') {
-                $(this).find('.rating-type').css('background-color','#b21f35').css('color', 'white');
-                                                  
-            } else {
-                return null;
-            }
-            //$(this).find('.rating-type').css('color', 'red');
-        }
-    });
+    for (var i=0; i<length; i++)
+    {
+        var profName = cells[i].innerText;
+        var scoreHeading = document.createElement('div');
+        scoreHeading.className = 'score-heading'; 
+        scoreHeading.innerText = "RateMyProfessors Score for: " + profName;
+        cells[i].appendChild(scoreHeading);
+    }
 }
+
+var queryBar = document.getElementById("q");
+queryBar.addEventListener("keydown", function(event) {
+    if(event.key === 'Enter') {
+        document.addEventListener('DOMContentLoaded', onPageLoad, true);
+    }
+});
+
+function onPageLoad(event) {
+    alert('Content has loaded');
+}
+
+
