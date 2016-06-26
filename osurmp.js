@@ -18,9 +18,7 @@ node[0].appendChild(enable);
 enable.addEventListener('click', main);
 
 
-var cells = document.querySelectorAll('[id^=MTG_INSTR]')
-
-MTG_INSTR
+//var cells = document.getElementsByClassName('right ng-binding ng-scope');
 
 function main() {
     changeResultColor();
@@ -38,15 +36,13 @@ function main() {
     }
 }
 
-var queryBar = document.getElementById("q");
-queryBar.addEventListener("keydown", function(event) {
-    if(event.key === 'Enter') {
-        document.addEventListener('DOMContentLoaded', onPageLoad, true);
-    }
-});
+// var queryBar = document.getElementById("q");
+// queryBar.addEventListener("keydown", function(event) {
+//     if(event.key === 'Enter') {
+//         document.addEventListener('DOMContentLoaded', onPageLoad, true);
+//     }
+// });
 
-function onPageLoad(event) {
-    alert('Content has loaded');
-}
+
 
 

@@ -24,8 +24,9 @@
 	"content_scripts": [
 	{
 		// fix this
-		"matches": ["https://classes.osu.edu/class-search/*"],
-		"js": ["jquery-3.0.0.min.js", "osurmp.js"]
+		"matches": ["https://courses.osu.edu/psp/csosuct/EMPLOYEE/PUB/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL", "https://classes.osu.edu/class-search/*"],
+		"js": ["jquery-3.0.0.min.js", "content.js"],
+		"run_at": "document_idle"
 	}
 	],
 

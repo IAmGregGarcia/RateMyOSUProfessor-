@@ -4,8 +4,8 @@
 //         chrome.pageAction.show(tabId);
 //     }
 // };
-chrome.tabs.executeScript({file: "osurmp.js", all_frames: true});
-chrome.tabs.onUpdated.addListener(showPageAction);
+//chrome.tabs.executeScript({file: "schedule_", all_frames: true});
+//chrome.tabs.onUpdated.addListener(showPageAction);
 
 //function to make xmlhttprequests
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
