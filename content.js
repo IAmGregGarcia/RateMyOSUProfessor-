@@ -36,13 +36,16 @@ createRMPHeader = function() {
     {
         var profName = cells[i].innerText;
         
-        // check if heading exists
+        // check if heading exists -- this needs to be reworked, when one changes
+        // the filters on search, the header still exists on the cells and therefore
+        // DOES NOT trigger the 'create header' mechanism
         var scoreHeading = cells[i].getElementsByClassName('score-heading');
         if(scoreHeading.length > 0) {
             // TODO: append rating
+            console.log('Header exists!');
         } else {
             // TODO: get RMP rating for current professor
-            var rating = getProfessorRating(profName)
+            var rating = getFakeProfRating(profName)
             var scoreHeading = document.createElement('div');
             scoreHeading.className = 'score-heading'; 
             scoreHeading.innerText = "Rating: " + rating; 
@@ -53,6 +56,16 @@ createRMPHeader = function() {
             // ratingCell.innerText = "3.5";
             // scoreHeading.appendChild(ratingCell);
         }
+    }
+}
+
+getFakeProfRating = function(professor) {
+    if(professor === "TBA") {
+        rating = "No professor(s) selected";
+        return rating;
+    } else {
+        rating = "3.5";
+        return rating;
     }
 }
 
@@ -76,13 +89,15 @@ getProfessorRating = function(professorName) {
 
         if(exceptions[professorName]) {
 
-            findRatings(exceptions[professorName], professorName);
+            var rating = findRatings(exceptions[professorName], professorName);
+            return rating;
         } else {
             rmpsearch = 'http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=The+Ohio+State+University&schoolID=724&query=PROFESSORNAME';
             rmpsearch = rmpsearch.replace('PROFESSORNAME', URLprofessorName);
         }
 
-        return getProfessorExtension(rmpsearch, professorName);
+        var rating = getProfessorExtension(rmpsearch, professorName);
+        return rating;
 }
 
 getProfessorExtension = function(searchPageURL, professorName){
@@ -106,10 +121,13 @@ getProfessorExtension = function(searchPageURL, professorName){
 
             //Check to make sure a result was found
             if (typeof professorURLExtension === 'undefined'){
-                updateRMPinfo('?','?', professorName);//update RMP cells with empty information
+                var rating = "N/A";
+                return rating;
+                //updateRMPinfo('?','?', professorName);//update RMP cells with empty information
             } else {
                 var professorPageURL = 'http://www.ratemyprofessors.com' + professorURLExtension;
-                ratings = findRatings(professorPageURL, professorName);
+                rating = findRatings(professorPageURL, professorName);
+                return rating;
             }
         }
         catch(err) {
@@ -161,6 +179,7 @@ findRatings = function(professorPageURL, professorName){
         }
         catch(err) {
             rating = '?';
+            return rating;
         }
 
         //updateRMPinfo(professorPageURL, rating, professorName);
