@@ -28,6 +28,9 @@ var RMPExtension = {
 	}
 };
 
+// append prof rating
+
+
 // select the target node
 var target = document.querySelector('#some-id');
  
