@@ -1,8 +1,4 @@
 
-/**
- *
- * 
- */
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count');
     resultCount[0].style.color = "red"; 
@@ -14,19 +10,9 @@ function changeResultColor() {
 var exceptions = {};
     exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
     exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
+    exceptions["Christine Ann Kiel"] = "Chris Kiel";
 
 
-//var cells = document.getElementsByClassName('right ng-binding ng-scope');
-
-
-    //changeResultColor();
-    
-    // var node = document.getElementsByClassName('site-subtitle');
-    // var enable = document.createElement('button');
-    // enable.id = 'enable-rmp';
-    // enable.innerText = "Enable RMP";
-    // node[0].appendChild(enable);
-    // enable.addEventListener('click', main);
 createRMPHeader = function() {   
 
     changeResultColor();
@@ -49,6 +35,10 @@ createRMPHeader = function() {
         parentCells[i].appendChild(div);
 
         var profName = cells[i].innerText;
+
+        if (exceptions[profName]) {
+            profName = exceptions[profName];
+        }
 
         if(profName != 'TBA' && profName != 'Staff') {
 
@@ -92,7 +82,7 @@ openPopup = function() {
         this.clicked = false;
     } else { //happens when button was clicked while inactive
         this.clicked = true;
-        this.innerHTML = '<input class="ratingButton" type="button" value="Hide Rating" />';
+        this.innerHTML = '<input class="ratingButton" type="button" style="background-color: #b00; color: #fff;" value="Hide Rating" />';
         var popup = document.createElement('div');
         popup.className = 'popup';
         popup.innerText = 'Loading...';
