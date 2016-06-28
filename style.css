@@ -60,27 +60,22 @@ width: 111.016px;
     background-color: #e5e5e5;
     border: 2px solid #D6D6D6;
     z-index: 100000000000000000;
-   /* position: absolute;
-    top: -171px;
-    left: 120px;
-    margin: 100px auto;
-    width: 190px;
-    height: 110px;
-    background-color: #FFFFFF; 
-    border: 2px solid #D6D6D6;
-    z-index: 100000000000000000;*/
 }
 
 .notFoundPopup {
-     top: -228px;
-    left: 240;
+    position: relative;
+    top: -142px;
+    left: 108px;
     right: 52px;
-    margin: 100px auto;
+   /* margin: 100px auto; */
+    margin-bottom: -155px;
+    margin-top: 25px;
     width: 220px;
     height: 140px;
     background-color: #e5e5e5;
     border: 2px solid #D6D6D6;
     z-index: 100000000000000000;
+
 }
 
 
@@ -88,37 +83,30 @@ width: 111.016px;
     display: block;
     background-color: #26686d;
     font-family: proximanova, "Helvetica Neue", Helvetica, Helvetica, Arial, sans-serif;;
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 600;
-    text-transform: uppercase;
     color: #fff;
     position: absolute;
     width: 216px;
-    height: 18px;
+    height: 22px;
     text-align: center;
     padding: 1px 0px 6px 0px; 
 }
-/*
-.heading a:hover {
-    color: blue;
-}
-*/
+
 .title {
     display: block;
-    font-family: proximanova, "Helvetica Neue", Helvetica, Helvetica, Arial, sans-serif;;
+    font-family: proximanova, "Helvetica Neue", Helvetica, Helvetica, Arial, sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     color: rgb(51, 51, 51);
     position: relative;
     text-align: center;
 }
 
 .text {
-/*    font-family: verdana;
-    font-size: 10px;
-    position: relative;
-    text-align: center; 
-}*/
+    font-family: proximanova, "Helvetica Neue", Helvetica, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500; 
 }
 
 .overall {
@@ -127,7 +115,7 @@ width: 111.016px;
     width: 105px;
     height: 20px;
     top: 40px;
-    left: -6px;
+    left: 6px;
 }
 
 .difficulty {
@@ -171,11 +159,16 @@ width: 111.016px;
 .idk {
     display: block;
     font-family: proximanova, "Helvetica Neue", Helvetica, Helvetica, Arial, sans-serif;;
-    font-size: 12px;
-    font-weight: 1000;
+    font-size: 14px;
+    font-weight: 700;
     position: absolute;
     width: 190px;
     height: 25px;
     top: 25px;
+    left: 10px;
     text-align: center;
 } 
+
+.idka a:hover {
+    color: red;
+}

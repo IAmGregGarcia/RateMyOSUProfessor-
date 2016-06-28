@@ -5,7 +5,7 @@ function changeResultColor() {
 }
 
 
-
+// as they accumlate, manually add exceptions. 
 var exceptions = {};
     exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
     exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
@@ -115,7 +115,8 @@ function processFirstRequest(popup, firstName, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        idk.innerText = "¯\\_(ツ)_/¯";
+        //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
+        idk.innerHTML = '<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -138,7 +139,8 @@ function processFirstRequest(popup, firstName, responseText) {
                 notFound.className = 'heading';
                 idk.className = 'idk';
                 notFound.innerText = "Professor not found";
-                idk.innerText = "¯\\_(ツ)_/¯";
+                //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
+                idk.innerHTML = '<p>¯\\_(ツ)_/¯'+ '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
                 emptyPopup.innerHTML = '';
                 emptyPopup.appendChild(notFound);
                 emptyPopup.appendChild(idk);
@@ -177,7 +179,8 @@ function addContentToPopUp(popup, profURL, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        idk.innerText = "¯\\_(ツ)_/¯";
+        //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
+        idk.innerHTML = '<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -270,19 +273,26 @@ swapArrayElements = function(a, x, y) {
 //
 // select the target node
 var target = document.querySelector('.result-count');    
-var blobs = [];
+var mutantCycles = [];
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
+    // loop through all mutations, keeping track of "results" number as page fully loads
+    // before calling main
     var length = mutations.length - 1;
     var mutant = mutations[length];
-    blobs.push(getFinalResult(mutant));
-    var blogLength = blobs.length;
-    for(var i=0; i<blogLength; i++) {
-        console.log(blobs[i]);
+    mutantCycles.push(getFinalResult(mutant));
+    var mutantCyclesLength = mutantCycles.length;
+    for(var i=0; i<mutantCyclesLength; i++) {
+        console.log(mutantCyclesLength[i]);
     }
     main();
-
 });
+
+function getFinalResult(mutant) {
+    var tmp = mutant.target.innerText.split(" ");
+    var results = parseInt(tmp[0], 10);
+    return results;
+}
 
 var options = { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true }
  
