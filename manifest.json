@@ -16,7 +16,7 @@
 
 	"author": "Greg Garcia",
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["eventPage.js"],
 		//Recommended
 		"persistent": false
 	},
@@ -25,6 +25,7 @@
 	{
 		// fix this
 		"matches": ["https://classes.osu.edu/class-search/*"],
+		"css": ["style.css"],
 		"js": ["jquery-3.0.0.min.js", "content.js"]
 	}
 	],
