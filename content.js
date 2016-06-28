@@ -1,8 +1,19 @@
 // changes results color to red
 function changeResultColor() {
-    var resultCount = document.getElementsByClassName('result-count');
+    var resultCount = document.getElementsByClassName('result-count-container');
     resultCount[0].style.color = "red"; 
+    // var text = document.createElement('div');
+    // var resultFilterText = document.getElementsByClassName('result-filer-text');
+    // if(resultFilterText.length > 0) {
+    //     // do nothing
+    // } else {
+    //     text.className = 'result-filer-text';
+    //     text.innerText = "Please filter search results by term.";
+    //     text.style.color = "red";
+    //     resultCount[0].appendChild(text);    
+    // }
 }
+
 
 
 // as they accumlate, manually add exceptions. 
@@ -74,7 +85,7 @@ function main() {
     }
 }
 
-openPopup = function() {
+function openPopup() {
     if (this.clicked == true) { //happens when button was clicked while active
         this.cell.innerHTML = '';
         this.innerHTML = '<input class="ratingButton" type="button" value="Show Rating" />';
@@ -294,7 +305,7 @@ function getFinalResult(mutant) {
     return results;
 }
 
-var options = { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true }
+var options = { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true, 'attributeFiler': ['class'] }
  
 // pass in the target node, as well as the observer options
 observer.observe(target, options);
