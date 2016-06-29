@@ -10,5 +10,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
 
     xhr.open('GET', request.url, true);
     xhr.send();
+    //xhr.close(); // may need to close this 
     return true; // prevents the callback from being called too early on return   
 });

@@ -2,7 +2,7 @@
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count-container');
     resultCount[0].style.color = "red"; 
-    // var text = document.createElement('div');
+    //var text = document.createElement('div');
     // var resultFilterText = document.getElementsByClassName('result-filer-text');
     // if(resultFilterText.length > 0) {
     //     // do nothing
@@ -14,6 +14,35 @@ function changeResultColor() {
     // }
 }
 
+var q = document.getElementById('q');
+q.addEventListener('keydown', function(event) {
+    var results = document.getElementsByClassName('result-count-container');
+    var resultContainer = results[0];
+    if(event.key === 'Enter') {
+        createRefreshButton(resultContainer);
+        main();
+    }
+}, false)
+
+function createRefreshButton(resultContainer) {
+    var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
+    var refreshButton = document.querySelector('.refresh-button-container');
+    if(!refreshButton) {
+        var div = document.createElement('div');
+        div.className = 'refresh-button-container';
+        div.innerHTML = '<input class="refreshButton" type="button" value="Refresh Ratings" style="background-color: #ba0506; color: #fff"/>';
+        div.clicked = false;
+        div.addEventListener('click', refresh);
+        resultContainer.appendChild(div);
+    } else {
+        var refreshContainer = document.querySelector('.refresh-button-container');
+        refreshContainer.innerHTML = '<input class="refreshButton" type="button" value="Refresh Ratings" style="background-color: #ba0506; color: #fff"/>';
+        refreshContainer.clicked = false;
+        refreshContainer.addEventListener('click', refresh);
+        resultContainer.appendChild(this);    
+    }
+}
+
 
 
 // as they accumlate, manually add exceptions. 
@@ -23,19 +52,48 @@ var exceptions = {};
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 
 
+function refresh() {
+    if (this.clicked == true) {
+        this.innerHTML = '<input class="refreshButton" type="button" value="Refresh Ratings" style="background-color: #ba0506; color: #fff"/>';
+        this.clicked = false;
+    } else {
+        this.innerHTML = '<input class="refreshButton" id="processing" type="button" value="Processing" style="background-color: #474747; color: #fff"/>';
+        setTimeout(function() {
+            var refreshContainer = document.querySelector('.refresh-button-container');
+            refreshContainer.clicked = true;
+            refreshContainer.innerHTML = '<input class="refreshButton" type="button" value="Ratings Refreshed" style="background-color: #909738; color: #fff" disabled/>';
+            //this.clicked = true;
+            // this.innerHTML = '<input class="refreshButton" type="button" value="Refreshed" style="background-color: #909738; color: #fff"/>';
+            main();
+        } , 1000);
+    }
+}
+
+// function updateToRefreshed() {
+//     this.clicked = true;
+//     this.innerHTML = '<input class="refreshButton" type="button" value="Refreshed" style="background-color: #909738; color: #fff"/>';
+//     main();
+// }
+
 function main() {   
 
     changeResultColor();
 
     var cells = document.getElementsByClassName("right ng-binding ng-scope");
     var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
+    //var buttonContainers = document.getElementsByClassName('button-container');
     var length = cells.length;
     var professors = [];
 
     for (var i=0; i<length; i++)
     {
-
+        var exists = parentCells[i].querySelector('.button-container');
+        if(!!exists) {
+            // TODO: ???
+            console.log('Button exists!');
+        } else {
         // create space for popup HTML
+        console.log('Creating new ratings button!');
         var popupContainer = document.createElement('div');
         var parentDiv = cells[i].parentNode;
         parentDiv.insertBefore(popupContainer, cells[i]);
@@ -52,24 +110,17 @@ function main() {
 
         if(profName != 'TBA' && profName != 'Staff') {
 
-            var heading = cells[i].getElementsByClassName('score-heading');
-            if(heading.length > 0) {
-                // TODO: append rating
-                console.log('Header exists!');
-            } else {
-
-                var profSplit = profName.split(" ");   
+                var profSplit = profName.split(" ");
+                var profArray = [];   
                 if(profSplit.length == 3) {
                     profSplit.splice(1, 1);
-                    var profArray = swapArrayElements(profSplit, 0, 1);
+                    profArray = swapArrayElements(profSplit, 0, 1);
                 } else {
-                    var profArray = swapArrayElements(profSplit, 0, 1);
+                    profArray = swapArrayElements(profSplit, 0, 1);
                 }
             
                 var profString = profArray.toString();
                 var searchName = profString.replace(/,/g,'+');
-                // TODO: get RMP rating for current professor
-                // var rating = getFakeProfRating(profName)
                 var ul = document.createElement('ul');
                 ul.className = 'score-heading'; 
                 ul.firstName = profArray[1];
@@ -83,6 +134,15 @@ function main() {
             }
         }
     }
+    var q = document.getElementById('q');
+    q.addEventListener('keydown', function(event) {
+        var results = document.getElementsByClassName('result-count-container');
+        var resultContainer = results[0];
+        if(event.key === 'Enter') {
+            createRefreshButton(resultContainer);
+            main();
+        }
+    }, false)
 }
 
 function openPopup() {
@@ -127,7 +187,7 @@ function processFirstRequest(popup, firstName, responseText) {
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
         //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-        idk.innerHTML = '<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
+        idk.innerHTML = '';//'<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -151,7 +211,7 @@ function processFirstRequest(popup, firstName, responseText) {
                 idk.className = 'idk';
                 notFound.innerText = "Professor not found";
                 //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-                idk.innerHTML = '<p>¯\\_(ツ)_/¯'+ '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
+                idk.innerHTML = '';//'<p>¯\\_(ツ)_/¯'+ '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
                 emptyPopup.innerHTML = '';
                 emptyPopup.appendChild(notFound);
                 emptyPopup.appendChild(idk);
@@ -180,9 +240,9 @@ function addContentToPopUp(popup, profURL, responseText) {
     tmp.innerHTML = responseText;
     
     //check if professor has any reviews
-    //if they have no reviews then just display the professor not found popup
-    if (tmp.getElementsByClassName('pfname').length == 0)
-    {
+    //if they have no reviews then display the professor not found popup
+    // TODO: add "be the first to rate this professor" link
+    if (tmp.getElementsByClassName('pfname').length == 0) {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
         var notFound = document.createElement('div');
@@ -191,7 +251,7 @@ function addContentToPopUp(popup, profURL, responseText) {
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
         //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-        idk.innerHTML = '<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
+        idk.innerHTML = '<p>Be the first to rate this professors: </p><a href=' + profURL + '/a>';//<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
