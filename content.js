@@ -2,16 +2,6 @@
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count-container');
     resultCount[0].style.color = "red"; 
-    //var text = document.createElement('div');
-    // var resultFilterText = document.getElementsByClassName('result-filer-text');
-    // if(resultFilterText.length > 0) {
-    //     // do nothing
-    // } else {
-    //     text.className = 'result-filer-text';
-    //     text.innerText = "Please filter search results by term.";
-    //     text.style.color = "red";
-    //     resultCount[0].appendChild(text);    
-    // }
 }
 
 var q = document.getElementById('q');
@@ -45,10 +35,8 @@ function createRefreshButton(resultContainer) {
 
 
 
-// as they accumlate, manually add exceptions. 
+// as they accumlate, manually add exceptions for name conflicts
 var exceptions = {};
-    exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
-    exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 
 
@@ -62,18 +50,10 @@ function refresh() {
             var refreshContainer = document.querySelector('.refresh-button-container');
             refreshContainer.clicked = true;
             refreshContainer.innerHTML = '<input class="refreshButton" type="button" value="Ratings Refreshed" style="background-color: #909738; color: #fff" disabled/>';
-            //this.clicked = true;
-            // this.innerHTML = '<input class="refreshButton" type="button" value="Refreshed" style="background-color: #909738; color: #fff"/>';
             main();
-        } , 1000);
+        } , 1000); // fix; this is for 'fake' processing info
     }
 }
-
-// function updateToRefreshed() {
-//     this.clicked = true;
-//     this.innerHTML = '<input class="refreshButton" type="button" value="Refreshed" style="background-color: #909738; color: #fff"/>';
-//     main();
-// }
 
 function main() {   
 
@@ -152,7 +132,7 @@ function openPopup() {
         this.clicked = false;
     } else { //happens when button was clicked while inactive
         this.clicked = true;
-        this.innerHTML = '<input class="ratingButton" type="button" style="background-color: #b00; color: #fff;" value="Hide Rating" />';
+        this.innerHTML = '<input class="ratingButton" type="button" style="background-color: #26686d; color: #fff;" value="Hide Rating" />';
         var popup = document.createElement('div');
         popup.className = 'popup';
         popup.innerText = 'Loading...';
@@ -186,8 +166,7 @@ function processFirstRequest(popup, firstName, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-        idk.innerHTML = '';//'<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
+        idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create">Add</a> professor!</p>';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -210,10 +189,7 @@ function processFirstRequest(popup, firstName, responseText) {
                 notFound.className = 'heading';
                 idk.className = 'idk';
                 notFound.innerText = "Professor not found";
-                //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-                idk.innerHTML = '';//'<p>¯\\_(ツ)_/¯'+ '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
-                emptyPopup.innerHTML = '';
-                emptyPopup.appendChild(notFound);
+                idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create">Add</a></p><p> professor!</p>';
                 emptyPopup.appendChild(idk);
                 return 0;
             }
@@ -226,7 +202,6 @@ function processFirstRequest(popup, firstName, responseText) {
         chrome.runtime.sendMessage({
             url: this.profURL
         }, function(responseText) {
-            //responseText = responseText.replace('http://blog.ratemyprofessors.com/wp-content/uploads/2015/01/WNOs6.5_RMP_72x72.jpg', '');
             responseText = responseText.replace('/assets/chilis/warm-chili.png', '');
             responseText = responseText.replace('/assets/chilis/cold-chili.png', '');
             addContentToPopUp(popup, profURL, responseText);
@@ -240,8 +215,6 @@ function addContentToPopUp(popup, profURL, responseText) {
     tmp.innerHTML = responseText;
     
     //check if professor has any reviews
-    //if they have no reviews then display the professor not found popup
-    // TODO: add "be the first to rate this professor" link
     if (tmp.getElementsByClassName('pfname').length == 0) {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -250,8 +223,7 @@ function addContentToPopUp(popup, profURL, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        //idk.innerText = "¯\\_(ツ)_/¯\nIf you believe this is an error, please contact the developer via the chrome web store.";
-        idk.innerHTML = '<p>Be the first to rate this professors: </p><a href=' + profURL + '/a>';//<p>¯\\_(ツ)_/¯' + '\nIf you think there has been an error, please <a href="https://www.google.com" target="_blank" style="color: blue;">contact</a> the developer via the chrome web store.';
+        idk.innerHTML = '<p>Be the first to rate this professors: </p><a href=' + profURL + '/a>';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -300,7 +272,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     numRatingsDiv.className = 'numRatings';
 
     //put rating data in divs
-    profNameDiv.innerHTML = proffName + " " + proflName;//'<a href="' + profURL + '" target="_blank">' + proffName + " " + proflName + '</a>';
+    profNameDiv.innerHTML = proffName + " " + proflName;
     overallTitleDiv.innerText = 'Overall Quality';
     overallTextDiv.innerText = overall.innerHTML.trim().concat(scale);
     wouldTakeAgainTitleDiv.innerText = 'Would Take Again';
@@ -332,7 +304,8 @@ function addContentToPopUp(popup, profURL, responseText) {
     popup.appendChild(numRatingsDiv);
 }
 
-swapArrayElements = function(a, x, y) {
+// helper function
+function swapArrayElements(a, x, y) {
   if (a.length === 1) return a;
   a.splice(y, 1, a.splice(x, 1, a[y])[0]);
   return a;
@@ -359,6 +332,7 @@ var observer = new MutationObserver(function(mutations) {
     main();
 });
 
+// remove this eventually, terribly inelegant 
 function getFinalResult(mutant) {
     var tmp = mutant.target.innerText.split(" ");
     var results = parseInt(tmp[0], 10);
@@ -369,7 +343,7 @@ var options = { 'attributes': true, 'childList': true, 'characterData': true, 's
  
 // pass in the target node, as well as the observer options
 observer.observe(target, options);
-//observer.disconnect();
+//observer.disconnect(); I'm not sure if this mutation obvesrver should ever be diconnected, probably not
 
 
 
