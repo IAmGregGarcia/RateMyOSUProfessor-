@@ -29,7 +29,7 @@ function createRefreshButton(resultContainer) {
         refreshContainer.innerHTML = '<input class="refreshButton" type="button" value="Refresh Ratings" style="background-color: #ba0506; color: #fff"/>';
         refreshContainer.clicked = false;
         refreshContainer.addEventListener('click', refresh);
-        resultContainer.appendChild(this);    
+        resultContainer.appendChild(refreshButton);    
     }
 }
 
