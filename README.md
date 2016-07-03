@@ -1,6 +1,6 @@
 ## RateMyOSUProfessor
 
-RateMyOSUProfessor allows you to view RateMyProfessors.com ratings directly on the new [Ohio State University course search page](https://classes.osu.edu/class-search/#/). Click the 'Show Rating' button bellow a professor's name to view a popup with RateMyProfessors.com rating information.
+RateMyOSUProfessor allows you to view RateMyProfessors.com ratings directly on the new [Ohio State University course search page](https://classes.osu.edu/class-search/#/). Click the 'Show Rating' button bellow a professor's name to view RateMyProfessors.com rating information.
 
 ## Motivation
 
