@@ -174,7 +174,7 @@ function processFirstRequest(popup, firstName, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create">Add</a> professor!</p>';
+        idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create" target="_blank">Add</a> professor!</p>';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
@@ -197,7 +197,7 @@ function processFirstRequest(popup, firstName, responseText) {
                 notFound.className = 'heading';
                 idk.className = 'idk';
                 notFound.innerText = "Professor not found";
-                idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create">Add</a></p><p> professor!</p>';
+                idk.innerHTML = '<p><a style="color: red !important; text-decoration: underline !important;" href="http://www.ratemyprofessors.com/teacher/create" target="_blank" >Add</a></p><p> professor!</p>';
                 emptyPopup.appendChild(idk);
                 return 0;
             }
@@ -231,7 +231,7 @@ function addContentToPopUp(popup, profURL, responseText) {
         notFound.className = 'heading';
         idk.className = 'idk';
         notFound.innerText = "Professor not found";
-        idk.innerHTML = '<p>Be the first to rate this professors: </p><a href=' + profURL + '/a>';
+        idk.innerHTML = '<p>Be the first to rate this professors: </p><a target="_blank" href=' + profURL + '/a>';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
