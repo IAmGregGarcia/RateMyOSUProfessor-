@@ -4,6 +4,7 @@ function changeResultColor() {
     resultCount[0].style.color = "red"; 
 }
 
+// TODO: conisder creating "q" object and passing into main()
 var q = document.getElementById('q');
 q.addEventListener('keydown', function(event) {
     var results = document.getElementsByClassName('result-count-container');
@@ -37,11 +38,8 @@ function createRefreshButton(resultContainer) {
 
 // as they accumlate, manually add exceptions for name conflicts
 var exceptions = {};
-<<<<<<< HEAD
    //  exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
    // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
-=======
->>>>>>> 5679e0b014208597de11eb58a2d46279cede5dcd
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 
 
@@ -64,14 +62,15 @@ function main() {
 
     changeResultColor();
 
+    // TODO: refactor, changin names from "cells" 
     var cells = document.getElementsByClassName("right ng-binding ng-scope");
     var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
     //var buttonContainers = document.getElementsByClassName('button-container');
     var length = cells.length;
-    var professors = [];
 
     for (var i=0; i<length; i++)
     {
+        // TODO: refactor; use !exists w/o else statement
         var exists = parentCells[i].querySelector('.button-container');
         if(!!exists) {
             // TODO: ???
@@ -119,6 +118,9 @@ function main() {
             }
         }
     }
+
+    // TODO: As stated above, consider creating "q" object and passing into main() - I should
+    // be concerned about initializing the same eventListener more than once
     var q = document.getElementById('q');
     q.addEventListener('keydown', function(event) {
         var results = document.getElementsByClassName('result-count-container');
