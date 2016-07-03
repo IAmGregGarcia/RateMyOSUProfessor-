@@ -41,6 +41,7 @@ var exceptions = {};
    //  exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
    // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
+	exceptions["Course search name"] = "directory (buckeyelink) name";
 
 
 function refresh() {
