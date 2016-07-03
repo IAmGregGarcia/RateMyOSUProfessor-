@@ -1,17 +1,14 @@
 {
-	// Required
-	"manifest_version": 2,
-	"name": "Ohio State Rate My Professor Extension - Course Search Page",
-	"version": "1.0.0.0",
 
-	// Recommended
-	//"default_locale": "en",
-	"description": "An extensin that allows user to view RateMyProfessors.com information for each Professor listed on course search page.",
-	"browser_action": {
-		"default_icon": "icon.png"
-	},
+	"manifest_version": 2,
+	"name": "RateMyOSUProfessor",
+	"version": "1.0.2",
+
+	"description": "View RateMyOSUProfessors ratings directly on the course search page.",
 	"icons": {
-		"16": "icon.png"
+		 "16": "icon.png", 
+		 "48": "icon.png", 
+		 "128": "icon.png" 
 		},
 
 	"author": "Greg Garcia",
@@ -27,6 +24,10 @@
 		"js": ["content.js"]
 	}
 	],
+
+	"page_action": {
+  		"default_icon": "icon.png"
+  	}, 
 
 	"permissions": [
 		"http://www.ratemyprofessors.com/*",
