@@ -1,3 +1,4 @@
+// TODO organize functions
 // changes results color to red
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count-container');
