@@ -43,6 +43,7 @@ var exceptions = {};
    // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 	exceptions["Course search name"] = "directory (buckeyelink) name";
+	exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
 
 
 function refresh() {
