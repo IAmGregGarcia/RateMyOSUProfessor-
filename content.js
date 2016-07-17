@@ -42,7 +42,7 @@ var exceptions = {};
    //  exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
    // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
-	exceptions["Course search name"] = "directory (buckeyelink) name";
+	exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
 
 
 function refresh() {
@@ -56,7 +56,7 @@ function refresh() {
             refreshContainer.clicked = true;
             refreshContainer.innerHTML = '<input class="refreshButton" type="button" value="Ratings Refreshed" style="background-color: #909738; color: #fff" disabled/>';
             main();
-        } , 1000); // fix; this is for 'fake' processing info
+        } , 1000); 
     }
 }
 
@@ -231,8 +231,8 @@ function addContentToPopUp(popup, profURL, responseText) {
         var idk = document.createElement('div');
         notFound.className = 'heading';
         idk.className = 'idk';
-        notFound.innerText = "Professor not found";
-        idk.innerHTML = '<p>Be the first to rate this professors: </p><a target="_blank" href=' + profURL + '/a>';
+        notFound.innerHTML = "Professor has no ratings";
+        idk.innerHTML = '<p>Be the first to <a target="_blank" href=' + profURL + ' style="color: red !important">rate this professor</a>.</p>';
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
