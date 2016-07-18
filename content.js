@@ -1,11 +1,10 @@
-// TODO organize functions
 // changes results color to red
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count-container');
     resultCount[0].style.color = "red"; 
 }
 
-// TODO: conisder creating "q" object and passing into main()
+// monitor search query bar
 var q = document.getElementById('q');
 q.addEventListener('keydown', function(event) {
     var results = document.getElementsByClassName('result-count-container');
@@ -39,8 +38,6 @@ function createRefreshButton(resultContainer) {
 
 // as they accumlate, manually add exceptions for name conflicts
 var exceptions = {};
-   //  exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
-   // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 	exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
 
@@ -64,19 +61,15 @@ function main() {
 
     changeResultColor();
 
-    // TODO: refactor, changin names from "cells" 
     var cells = document.getElementsByClassName("right ng-binding ng-scope");
     var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
-    //var buttonContainers = document.getElementsByClassName('button-container');
     var length = cells.length;
 
     for (var i=0; i<length; i++)
     {
-        // TODO: refactor; use !exists w/o else statement
         var exists = parentCells[i].querySelector('.button-container');
         if(!!exists) {
-            // TODO: ???
-            console.log('Button exists!');
+          // console.log('Button exists!');
         } else {
         // create space for popup HTML
         console.log('Creating new ratings button!');
@@ -113,7 +106,7 @@ function main() {
                 ul.searchURL = 'http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=The+Ohio+State+University&schoolID=724&query=' + searchName;
                 ul.profURL = '';
                 ul.innerHTML = '<input class="ratingButton" type="button" value="Show Rating" />';
-                ul.cell = popupContainer; // space for popup HTML we created earlier
+                ul.cell = popupContainer; // space for popup HTML created earlier
                 ul.clicked = false;
                 ul.addEventListener('click', openPopup);
                 div.appendChild(ul);
@@ -121,8 +114,7 @@ function main() {
         }
     }
 
-    // TODO: As stated above, consider creating "q" object and passing into main() - I should
-    // be concerned about initializing the same eventListener more than once
+	// monitor search query bar
     var q = document.getElementById('q');
     q.addEventListener('keydown', function(event) {
         var results = document.getElementsByClassName('result-count-container');
@@ -166,7 +158,7 @@ function processFirstRequest(popup, firstName, responseText) {
     tmp.innerHTML = responseText;
     var foundProfs = tmp.getElementsByClassName('listing PROFESSOR');
 
-    if (foundProfs.length == 0) //if no results were returned, print this message
+    if (foundProfs.length == 0) 
     {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -179,7 +171,7 @@ function processFirstRequest(popup, firstName, responseText) {
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
-    } else //iterate through the search results and match by first letter of first name to verify identity
+    } else // iterate through the search results and match by first letter of first name to verify identity
     {
         var length = foundProfs.length;
 
@@ -204,9 +196,9 @@ function processFirstRequest(popup, firstName, responseText) {
             }
         }
 
-        //get the link for the actual professor page
+        // get the link for the actual professor page
         var link = tmp.getElementsByTagName('a');
-        profURL = 'http://www.ratemyprofessors.com/' + link[0].toString().slice(23); //this is the URL
+        profURL = 'http://www.ratemyprofessors.com/' + link[0].toString().slice(23);
 
         chrome.runtime.sendMessage({
             url: this.profURL
@@ -218,12 +210,12 @@ function processFirstRequest(popup, firstName, responseText) {
     }
 }
 
-//function that adds content to popup
+// add content to popup
 function addContentToPopUp(popup, profURL, responseText) {
     var tmp = document.createElement('div');
     tmp.innerHTML = responseText;
     
-    //check if professor has any reviews
+    // check if professor has any reviews, if not, create link to prof page
     if (tmp.getElementsByClassName('pfname').length == 0) {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -245,7 +237,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     var numRatings = tmp.getElementsByClassName('table-toggle rating-count active')[0].innerText;
     tmp.innerHTML = ratingInfo.innerHTML;
 
-    //get the raw rating data
+    // get the raw rating data
     var ratings = tmp.getElementsByClassName('grade');
 
     var scale = " / 5.0";
