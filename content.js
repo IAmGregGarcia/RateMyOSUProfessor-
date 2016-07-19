@@ -4,10 +4,7 @@ function changeResultColor() {
     resultCount[0].style.color = "red"; 
 }
 
-<<<<<<< HEAD
-=======
 // monitor search query bar
->>>>>>> master
 var q = document.getElementById('q');
 q.addEventListener('keydown', function(event) {
     var results = document.getElementsByClassName('result-count-container');
@@ -72,11 +69,7 @@ function main() {
     {
         var exists = parentCells[i].querySelector('.button-container');
         if(!!exists) {
-<<<<<<< HEAD
-           //  console.log('Button exists!');
-=======
           // console.log('Button exists!');
->>>>>>> master
         } else {
         // create space for popup HTML
         console.log('Creating new ratings button!');
@@ -121,11 +114,7 @@ function main() {
         }
     }
 
-<<<<<<< HEAD
-	// monitor search bar
-=======
 	// monitor search query bar
->>>>>>> master
     var q = document.getElementById('q');
     q.addEventListener('keydown', function(event) {
         var results = document.getElementsByClassName('result-count-container');
@@ -169,11 +158,7 @@ function processFirstRequest(popup, firstName, responseText) {
     tmp.innerHTML = responseText;
     var foundProfs = tmp.getElementsByClassName('listing PROFESSOR');
 
-<<<<<<< HEAD
-    if (foundProfs.length == 0) // if no results were returned, print this message
-=======
     if (foundProfs.length == 0) 
->>>>>>> master
     {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -225,20 +210,12 @@ function processFirstRequest(popup, firstName, responseText) {
     }
 }
 
-<<<<<<< HEAD
-// function that adds content to popup
-=======
 // add content to popup
->>>>>>> master
 function addContentToPopUp(popup, profURL, responseText) {
     var tmp = document.createElement('div');
     tmp.innerHTML = responseText;
     
-<<<<<<< HEAD
-    // check if professor has any reviews
-=======
     // check if professor has any reviews, if not, create link to prof page
->>>>>>> master
     if (tmp.getElementsByClassName('pfname').length == 0) {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
