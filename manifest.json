@@ -2,7 +2,7 @@
 
 	"manifest_version": 2,
 	"name": "RateMyOSUProfessor",
-	"version": "1.0.3",
+	"version": "1.0.4",
 
 	"description": "View RateMyOSUProfessors ratings directly on the course search page.",
 	"icons": {

@@ -1,11 +1,9 @@
-// TODO organize functions
 // changes results color to red
 function changeResultColor() {
     var resultCount = document.getElementsByClassName('result-count-container');
     resultCount[0].style.color = "red"; 
 }
 
-// TODO: conisder creating "q" object and passing into main()
 var q = document.getElementById('q');
 q.addEventListener('keydown', function(event) {
     var results = document.getElementsByClassName('result-count-container');
@@ -39,8 +37,6 @@ function createRefreshButton(resultContainer) {
 
 // as they accumlate, manually add exceptions for name conflicts
 var exceptions = {};
-   //  exceptions["Anastasios (Tasos) Sidiropoulos"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=2044391";
-   // exceptions["Mikhail Belkin"] = "http://www.ratemyprofessors.com/ShowRatings.jsp?tid=864899";
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
 	exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
 
@@ -64,19 +60,15 @@ function main() {
 
     changeResultColor();
 
-    // TODO: refactor, changin names from "cells" 
     var cells = document.getElementsByClassName("right ng-binding ng-scope");
     var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
-    //var buttonContainers = document.getElementsByClassName('button-container');
     var length = cells.length;
 
     for (var i=0; i<length; i++)
     {
-        // TODO: refactor; use !exists w/o else statement
         var exists = parentCells[i].querySelector('.button-container');
         if(!!exists) {
-            // TODO: ???
-            console.log('Button exists!');
+           //  console.log('Button exists!');
         } else {
         // create space for popup HTML
         console.log('Creating new ratings button!');
@@ -121,8 +113,7 @@ function main() {
         }
     }
 
-    // TODO: As stated above, consider creating "q" object and passing into main() - I should
-    // be concerned about initializing the same eventListener more than once
+	// monitor search bar
     var q = document.getElementById('q');
     q.addEventListener('keydown', function(event) {
         var results = document.getElementsByClassName('result-count-container');
@@ -135,11 +126,11 @@ function main() {
 }
 
 function openPopup() {
-    if (this.clicked == true) { //happens when button was clicked while active
+    if (this.clicked == true) { // happens when button was clicked while active
         this.cell.innerHTML = '';
         this.innerHTML = '<input class="ratingButton" type="button" value="Show Rating" />';
         this.clicked = false;
-    } else { //happens when button was clicked while inactive
+    } else { // happens when button was clicked while inactive
         this.clicked = true;
         this.innerHTML = '<input class="ratingButton" type="button" style="background-color: #26686d; color: #fff;" value="Hide Rating" />';
         var popup = document.createElement('div');
@@ -160,13 +151,13 @@ function openPopup() {
     }
 }
 
-//function that processes first request from ratemyprofessors and makes second request
+// function that processes first request from ratemyprofessors and makes second request
 function processFirstRequest(popup, firstName, responseText) {
-    var tmp = document.createElement('div'); //make a temp element so that we can search through its html
+    var tmp = document.createElement('div'); // make a temp element so that we can search through its html
     tmp.innerHTML = responseText;
     var foundProfs = tmp.getElementsByClassName('listing PROFESSOR');
 
-    if (foundProfs.length == 0) //if no results were returned, print this message
+    if (foundProfs.length == 0) // if no results were returned, print this message
     {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -179,7 +170,7 @@ function processFirstRequest(popup, firstName, responseText) {
         emptyPopup.innerHTML = '';
         emptyPopup.appendChild(notFound);
         emptyPopup.appendChild(idk);
-    } else //iterate through the search results and match by first letter of first name to verify identity
+    } else // iterate through the search results and match by first letter of first name to verify identity
     {
         var length = foundProfs.length;
 
@@ -204,7 +195,7 @@ function processFirstRequest(popup, firstName, responseText) {
             }
         }
 
-        //get the link for the actual professor page
+        // get the link for the actual professor page
         var link = tmp.getElementsByTagName('a');
         profURL = 'http://www.ratemyprofessors.com/' + link[0].toString().slice(23); //this is the URL
 
@@ -218,12 +209,12 @@ function processFirstRequest(popup, firstName, responseText) {
     }
 }
 
-//function that adds content to popup
+// function that adds content to popup
 function addContentToPopUp(popup, profURL, responseText) {
     var tmp = document.createElement('div');
     tmp.innerHTML = responseText;
     
-    //check if professor has any reviews
+    // check if professor has any reviews
     if (tmp.getElementsByClassName('pfname').length == 0) {
         var emptyPopup = popup;
         emptyPopup.className = 'notFoundPopup';
@@ -245,7 +236,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     var numRatings = tmp.getElementsByClassName('table-toggle rating-count active')[0].innerText;
     tmp.innerHTML = ratingInfo.innerHTML;
 
-    //get the raw rating data
+    // get the raw rating data
     var ratings = tmp.getElementsByClassName('grade');
 
     var scale = " / 5.0";
@@ -254,7 +245,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     var difficulty = ratings[2];
     tmp.remove();
 
-    //create the ratings divs
+    // create the ratings divs
     var profNameDiv = document.createElement('div');
     var overallDiv = document.createElement('div');
     var overallTitleDiv = document.createElement('div');
@@ -267,7 +258,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     var difficultyTextDiv = document.createElement('div');
     var numRatingsDiv = document.createElement('div');
 
-    //assign class names for styling
+    // assign class names for styling
     profNameDiv.className = 'heading';
     overallDiv.className = 'overall';
     overallTitleDiv.className = 'title';
@@ -280,7 +271,7 @@ function addContentToPopUp(popup, profURL, responseText) {
     difficultyTextDiv.className = 'text';
     numRatingsDiv.className = 'numRatings';
 
-    //put rating data in divs
+    // put rating data in divs
     profNameDiv.innerHTML = proffName + " " + proflName;
     overallTitleDiv.innerText = 'Overall Quality';
     overallTextDiv.innerText = overall.innerHTML.trim().concat(scale);
@@ -289,16 +280,16 @@ function addContentToPopUp(popup, profURL, responseText) {
     difficultyTitleDiv.innerText = 'Difficulty';
     difficultyTextDiv.innerText = difficulty.innerHTML.trim().concat(scale);
 
-    numRatings = numRatings.slice(9).split(' ')[0] //check to see if "ratings" is singular or plural
+    numRatings = numRatings.slice(9).split(' ')[0] // check to see if "ratings" is singular or plural
     if (numRatings == '1') {
         numRatingsDiv.innerHTML = '<a href="' + profURL + '" target="_blank">' + numRatings + ' rating</a>';
     } else {
         numRatingsDiv.innerHTML = '<a href="' + profURL + '" target="_blank">' + numRatings + ' ratings</a>';
     }
 
-    popup.innerHTML = ''; //remove 'loading...' text
+    popup.innerHTML = ''; // remove 'loading...' text
 
-    //add divs to popup
+    // add divs to popup
     overallTitleDiv.appendChild(overallTextDiv);
     overallDiv.appendChild(overallTitleDiv);
     wouldTakeAgainTitleDiv.appendChild(wouldTakeAgainTextDiv);
@@ -341,7 +332,7 @@ var observer = new MutationObserver(function(mutations) {
     main();
 });
 
-// remove this eventually, terribly inelegant 
+// TODO remove this eventually, terribly inelegant 
 function getFinalResult(mutant) {
     var tmp = mutant.target.innerText.split(" ");
     var results = parseInt(tmp[0], 10);
@@ -352,7 +343,6 @@ var options = { 'attributes': true, 'childList': true, 'characterData': true, 's
  
 // pass in the target node, as well as the observer options
 observer.observe(target, options);
-//observer.disconnect(); I'm not sure if this mutation obvesrver should ever be diconnected, probably not
 
 
 
