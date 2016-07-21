@@ -39,7 +39,7 @@ function createRefreshButton(resultContainer) {
 // as they accumlate, manually add exceptions for name conflicts
 var exceptions = {};
     exceptions["Christine Ann Kiel"] = "Chris Kiel";
-	exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
+    exceptions["James E Chiucchi Jr."] = "Jimmy Chiucchi";
 
 
 function refresh() {
