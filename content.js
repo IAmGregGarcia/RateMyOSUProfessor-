@@ -69,10 +69,10 @@ function main() {
     {
         var exists = parentCells[i].querySelector('.button-container');
         if(!!exists) {
+			return false;
           // console.log('Button exists!');
         } else {
         // create space for popup HTML
-        console.log('Creating new ratings button!');
         var popupContainer = document.createElement('div');
         var parentDiv = cells[i].parentNode;
         parentDiv.insertBefore(popupContainer, cells[i]);
@@ -144,9 +144,6 @@ function openPopup() {
         chrome.runtime.sendMessage({
             url: this.searchURL
         }, function(responseText) {
-            responseText = responseText.replace('http://blog.ratemyprofessors.com/wp-content/uploads/2015/01/WNOs6.5_RMP_72x72.jpg', '');
-            responseText = responseText.replace('/assets/chilis/warm-chili.png', '');
-            responseText = responseText.replace('/assets/chilis/cold-chili.png', '');
             processFirstRequest(popup, firstName, responseText);
         });
     }
@@ -328,7 +325,7 @@ var observer = new MutationObserver(function(mutations) {
     mutantCycles.push(getFinalResult(mutant));
     var mutantCyclesLength = mutantCycles.length;
     for(var i=0; i<mutantCyclesLength; i++) {
-        console.log(mutantCyclesLength[i]);
+        // console.log(mutantCyclesLength[i]);
     }
     main();
 });
