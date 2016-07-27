@@ -1,9 +1,3 @@
-// changes results color to red
-function changeResultColor() {
-    var resultCount = document.getElementsByClassName('result-count-container');
-    resultCount[0].style.color = "red"; 
-}
-
 // monitor search query bar
 var q = document.getElementById('q');
 q.addEventListener('keydown', function(event) {
@@ -58,8 +52,6 @@ function refresh() {
 }
 
 function main() {   
-
-    changeResultColor();
 
     var cells = document.getElementsByClassName("right ng-binding ng-scope");
     var parentCells = document.getElementsByClassName('col-md-6 col-sm-5');
