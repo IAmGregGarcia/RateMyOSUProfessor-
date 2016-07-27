@@ -2,9 +2,9 @@
 
 	"manifest_version": 2,
 	"name": "RateMyOSUProfessor",
-	"version": "1.0.4",
+	"version": "1.0.5",
 
-	"description": "View RateMyOSUProfessors ratings directly on the course search page.",
+	"description": "View RateMyProfessors.com ratings directly on the OSU course search page.",
 	"icons": {
 		 "16": "icon.png", 
 		 "48": "icon.png", 
@@ -30,8 +30,7 @@
   	}, 
 
 	"permissions": [
-		"http://www.ratemyprofessors.com/*",
-		"tabs"
+		"http://www.ratemyprofessors.com/*"
 	],
 
 	"web_accessible_resources": [
