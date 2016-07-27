@@ -208,6 +208,7 @@ function processFirstRequest(popup, firstName, responseText) {
 }
 
 // add content to popup
+// Thanks to github.com/cbarbello et al for popup influence and content
 function addContentToPopUp(popup, profURL, responseText) {
     var tmp = document.createElement('div');
     tmp.innerHTML = responseText;
@@ -310,7 +311,7 @@ function swapArrayElements(a, x, y) {
 };
 
 // Need MutationObserver to watch for changes in the number of results on 'results' page. When triggered,
-// we modify page to include a "show rating" button for each professor, allow user to view RateMyProfessors.com
+// we modify page to include a "show rating" button for each professor, allowing user to view RateMyProfessors.com
 // ratings
 //
 // select the target node
